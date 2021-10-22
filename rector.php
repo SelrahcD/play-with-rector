@@ -11,10 +11,11 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $parameters->set(Option::PATHS, [__DIR__ . '/src', __DIR__ . '/tests']);
 
+    $parameters->set(Option::AUTO_IMPORT_NAMES, true);
+
     $containerConfigurator->import(SetList::DEAD_CODE);
     $containerConfigurator->import(SetList::CODE_QUALITY);
 
     $services = $containerConfigurator->services();
     $services->set(TemplateAnnotationToThisRenderRector::class);
-
 };

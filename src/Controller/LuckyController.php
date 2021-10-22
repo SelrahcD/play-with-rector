@@ -1,19 +1,19 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class LuckyController extends AbstractController
 {
-
     /**
      * @Route("/lucky/number")
      */
-    public function numberAction(): \Symfony\Component\HttpFoundation\Response
+    public function numberAction(): Response
     {
         $number = random_int(0, 100);
 
