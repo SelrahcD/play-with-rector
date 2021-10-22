@@ -12,14 +12,13 @@ final class LuckyController extends AbstractController
 
     /**
      * @Route("/lucky/number")
-     * @Template()
      */
-    public function numberAction(): array
+    public function numberAction(): \Symfony\Component\HttpFoundation\Response
     {
         $number = random_int(0, 100);
 
-        return [
+        return $this->render('Lucky/number.html.twig', [
             'number' => $number,
-        ];
+        ]);
     }
 }
