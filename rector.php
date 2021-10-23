@@ -5,6 +5,7 @@ use Rector\Core\Configuration\Option;
 use Rector\Set\ValueObject\SetList;
 use Rector\Symfony\Rector\ClassMethod\TemplateAnnotationToThisRenderRector;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Utils\Rector\Rector\ReplaceRenderByCallToTemplatingRenderRector;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $parameters = $containerConfigurator->parameters();
@@ -18,4 +19,5 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services = $containerConfigurator->services();
     $services->set(TemplateAnnotationToThisRenderRector::class);
+    $services->set(ReplaceRenderByCallToTemplatingRenderRector::class);
 };
