@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Rector\Core\Configuration\Option;
+use Rector\Removing\Rector\Class_\RemoveParentRector;
 use Rector\Set\ValueObject\SetList;
 use Rector\Symfony\Rector\ClassMethod\TemplateAnnotationToThisRenderRector;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -20,4 +21,9 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
     $services->set(TemplateAnnotationToThisRenderRector::class);
     $services->set(ReplaceRenderByCallToTemplatingRenderRector::class);
+
+    $services->set(RemoveParentRector::class)
+        ->call('configure', [[
+            RemoveParentRector::PARENT_TYPES_TO_REMOVE => [\Symfony\Bundle\FrameworkBundle\Controller\AbstractController::class],
+        ]]);
 };
