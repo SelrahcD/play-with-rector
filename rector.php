@@ -21,9 +21,4 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
     $services->set(TemplateAnnotationToThisRenderRector::class);
     $services->set(ReplaceRenderByCallToTemplatingRenderRector::class);
-
-    $services->set(RemoveParentRector::class)
-        ->call('configure', [[
-            RemoveParentRector::PARENT_TYPES_TO_REMOVE => [\Symfony\Bundle\FrameworkBundle\Controller\AbstractController::class],
-        ]]);
 };
