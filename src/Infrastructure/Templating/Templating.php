@@ -8,5 +8,5 @@ use Symfony\Component\HttpFoundation\Response;
 
 interface Templating
 {
-    public function render(string $templateFile, array $parameters): Response;
+    public function render(string $templateFile, array $parameters): string;
 }

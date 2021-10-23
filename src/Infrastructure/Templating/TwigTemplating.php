@@ -15,7 +15,7 @@ final class TwigTemplating implements Templating
     {
     }
 
-    public function render(string $templateFile, array $parameters): Response
+    public function render(string $templateFile, array $parameters): string
     {
         return $this->twig->render($templateFile, $parameters);
     }
