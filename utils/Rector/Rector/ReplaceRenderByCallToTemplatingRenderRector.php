@@ -9,21 +9,24 @@ use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Analyser\Scope;
-use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\ObjectType;
 use Rector\Core\Exception\ShouldNotHappenException;
+use Rector\NodeCollector\ScopeResolver\ParentClassScopeResolver;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\PostRector\Collector\PropertyToAddCollector;
 use Rector\PostRector\ValueObject\PropertyMetadata;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 final class ReplaceRenderByCallToTemplatingRenderRector extends \Rector\Core\Rector\AbstractRector
 {
 
 
-    public function __construct(private PropertyToAddCollector $propertyToAddCollector)
-    {
+    public function __construct(
+        private PropertyToAddCollector $propertyToAddCollector,
+        private ParentClassScopeResolver $parentClassScopeResolver
+    ) {
     }
 
     public function getRuleDefinition(): \Symplify\RuleDocGenerator\ValueObject\RuleDefinition
@@ -46,29 +49,11 @@ final class ReplaceRenderByCallToTemplatingRenderRector extends \Rector\Core\Rec
      */
     public function refactor(Node $node)
     {
-        $identifier = $node->name;
-
-        if (!$identifier instanceof Node\Identifier) {
-            throw new \PHPStan\ShouldNotHappenException();
-        }
-
-        if ($identifier->name !== 'render') {
+        if(!$this->isObjectType($node->var, new ObjectType(AbstractController::class))){
             return;
         }
 
-        $scope = $node->getAttribute(AttributeKey::SCOPE);
-
-        if (!$scope instanceof Scope) {
-            return;
-        }
-
-        $classReflection = $scope->getClassReflection();
-
-        if (!$classReflection instanceof ClassReflection) {
-            return;
-        }
-
-        if (!$classReflection->isSubclassOf(AbstractController::class)) {
+        if (!$this->isName($node->name, 'render')) {
             return;
         }
 
@@ -86,7 +71,10 @@ final class ReplaceRenderByCallToTemplatingRenderRector extends \Rector\Core\Rec
 
         $propertyFetch = $this->nodeFactory->createPropertyFetch('this', 'templating');
 
-        return new MethodCall($propertyFetch, 'render', $node->args);
+        return new Node\Expr\New_(
+            new Node\Name\FullyQualified(Response::class),
+            [new MethodCall($propertyFetch, 'render', $node->args)]
+        );
     }
 }
 
