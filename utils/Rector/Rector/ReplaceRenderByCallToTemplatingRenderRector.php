@@ -10,6 +10,7 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Type\ObjectType;
 use Rector\Core\Exception\ShouldNotHappenException;
+use Rector\Core\Rector\AbstractRector;
 use Rector\NodeCollector\ScopeResolver\ParentClassScopeResolver;
 use Rector\NodeTypeResolver\Node\AttributeKey;
 use Rector\PostRector\Collector\PropertyToAddCollector;
@@ -18,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
-final class ReplaceRenderByCallToTemplatingRenderRector extends \Rector\Core\Rector\AbstractRector
+final class ReplaceRenderByCallToTemplatingRenderRector extends AbstractRector
 {
     public function __construct(
         private PropertyToAddCollector $propertyToAddCollector,
