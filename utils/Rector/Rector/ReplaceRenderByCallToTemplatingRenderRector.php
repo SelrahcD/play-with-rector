@@ -8,7 +8,6 @@ use App\Infrastructure\Templating\Templating;
 use PhpParser\Node;
 use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Stmt\Class_;
-use PHPStan\Analyser\Scope;
 use PHPStan\Type\ObjectType;
 use Rector\Core\Exception\ShouldNotHappenException;
 use Rector\NodeCollector\ScopeResolver\ParentClassScopeResolver;
@@ -21,15 +20,13 @@ use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
 final class ReplaceRenderByCallToTemplatingRenderRector extends \Rector\Core\Rector\AbstractRector
 {
-
-
     public function __construct(
         private PropertyToAddCollector $propertyToAddCollector,
         private ParentClassScopeResolver $parentClassScopeResolver
     ) {
     }
 
-    public function getRuleDefinition(): \Symplify\RuleDocGenerator\ValueObject\RuleDefinition
+    public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
             'Replace usage of Symfony AbstractController render by a call to Templating render method',
@@ -49,7 +46,7 @@ final class ReplaceRenderByCallToTemplatingRenderRector extends \Rector\Core\Rec
      */
     public function refactor(Node $node)
     {
-        if(!$this->isObjectType($node->var, new ObjectType(AbstractController::class))){
+        if (!$this->isObjectType($node->var, new ObjectType(AbstractController::class))) {
             return;
         }
 
@@ -71,32 +68,17 @@ final class ReplaceRenderByCallToTemplatingRenderRector extends \Rector\Core\Rec
 
         $propertyFetch = $this->nodeFactory->createPropertyFetch('this', 'templating');
 
-        return new Node\Expr\New_(
-            new Node\Name\FullyQualified(Response::class),
-            [new MethodCall($propertyFetch, 'render', $node->args)]
-        );
+        $templatingRenderMethodCall = new MethodCall($propertyFetch, 'render', array_slice($node->args, 0, 2));
+
+        if (count($node->args) === 2) {
+            return new Node\Expr\New_(
+                new Node\Name\FullyQualified(Response::class),
+                [$templatingRenderMethodCall]
+            );
+        }
+
+        $existingResponse = $node->args[2]->value;
+
+        return new MethodCall($existingResponse, 'setContent', [$templatingRenderMethodCall]);
     }
 }
-
-
-//        $scope = $node->getAttribute(AttributeKey::SCOPE);
-//
-//        if(! $scope instanceof Scope) {
-//            return;
-//        }
-//
-//        $classReflection = $scope->getClassReflection();
-//
-//        if(! $classReflection instanceof ClassReflection) {
-//            return;
-//        }
-//
-//        if(! $classReflection->isSubclassOf(AbstractController::class)) {
-//            return;
-//        }
-
-//        if(!$this->isName($node, "render")) {
-//            return;
-//        }
-
-//        $node->name = new \PhpParser\Node\Name('mysqli_connect');

@@ -10,7 +10,6 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class ReplaceRenderByCallToTemplatingRenderRectorTest extends AbstractRectorTestCase
 {
-
     /**
      * @dataProvider examples
      */
@@ -21,7 +20,7 @@ final class ReplaceRenderByCallToTemplatingRenderRectorTest extends AbstractRect
 
     public function provideConfigFilePath(): string
     {
-       return __DIR__ . '/config/config.php';
+        return __DIR__ . '/config/config.php';
     }
 
     /**
