@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+    <name>glossary</name>
+    <author>Charles Desneuf</author>
+    <email>c.desneuf@gmail.com</email>
+    <version>1.0.0</version>
+    <transformations>
+        <transformation writer="twig" source="./index.html.twig" artifact="glossary.html"/>
+    </transformations>
+    <parameters>
+        <parameter key="twig-debug">true</parameter>
+    </parameters>
+</template>

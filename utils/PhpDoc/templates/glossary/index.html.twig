@@ -1,0 +1,17 @@
+
+<h1>Indexes</h1>
+
+ <ul>
+     {% for class in project.indexes.get('classes') %}
+
+         {% if class.tags.AggregateRoot is not empty %}
+            <li>
+                {{ class.name }}
+                ###
+                {{ class.summary }}
+                ###
+            </li>
+         {% endif %}
+
+     {% endfor %}
+ </ul>
