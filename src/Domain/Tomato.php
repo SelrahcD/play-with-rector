@@ -13,5 +13,4 @@ namespace App\Domain;
  */
 final class Tomato
 {
-
 }
