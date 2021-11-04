@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+namespace App\Playground;
 
 final class InMemoryCartRepository implements CartRepository
 {
