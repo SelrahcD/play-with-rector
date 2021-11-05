@@ -11,18 +11,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class LuckyController extends AbstractController
 {
-    public function __construct(private Templating $templating)
-    {
-    }
     /**
      * @Route("/lucky/number")
      */
-    public function numberAction(): Response
+    public function numberAction()
     {
         $number = random_int(0, 100);
 
-        return new Response($this->templating->render('Lucky/number.html.twig', [
+        return $this->render('Lucky/number.html.twig', [
             'number' => $number,
-        ]));
+        ]);
     }
 }
