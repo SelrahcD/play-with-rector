@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Rector\AddTestContext;
+namespace App\Tests\Rector\UseContainerInsteadOfPassingRepositoriesToBuilderRector\AddTestContext;
 
 use Iterator;
 use Rector\Testing\PHPUnit\AbstractRectorTestCase;

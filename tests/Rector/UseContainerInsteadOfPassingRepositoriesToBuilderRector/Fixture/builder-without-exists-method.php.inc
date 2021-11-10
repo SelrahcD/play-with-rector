@@ -1,8 +1,6 @@
 <?php
 
-class CartBuilderWithoutMethodForContainer {
-
-}
+use App\Tests\Rector\UseContainerInsteadOfPassingRepositoriesToBuilderRector\Source\CartBuilderWithoutMethodForContainer;
 
 class SomeTest extends \PHPUnit\Framework\TestCase {
 
@@ -16,9 +14,7 @@ class SomeTest extends \PHPUnit\Framework\TestCase {
 -----
 <?php
 
-class CartBuilderWithoutMethodForContainer {
-
-}
+use App\Tests\Rector\UseContainerInsteadOfPassingRepositoriesToBuilderRector\Source\CartBuilderWithoutMethodForContainer;
 
 class SomeTest extends \PHPUnit\Framework\TestCase {
 

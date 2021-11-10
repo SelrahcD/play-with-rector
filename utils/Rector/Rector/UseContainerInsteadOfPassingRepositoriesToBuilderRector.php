@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Utils\Rector\Rector;
 
+use App\Tests\Rector\UseContainerInsteadOfPassingRepositoriesToBuilderRector\Source\CartBuilderWithAMethodForContainer;
+use App\Tests\Rector\UseContainerInsteadOfPassingRepositoriesToBuilderRector\Source\CartBuilderWithAnExistsMethodForContainer;
 use PhpParser\Node;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Type\ObjectType;
@@ -12,13 +14,13 @@ use Rector\PHPUnit\NodeManipulator\SetUpClassMethodNodeManipulator;
 use Rector\StaticTypeMapper\ValueObject\Type\FullyQualifiedObjectType;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 
+
 final class UseContainerInsteadOfPassingRepositoriesToBuilderRector extends \Rector\Core\Rector\AbstractRector
 {
 
     private array $classMethodPairs = [
-        [\CartBuilderWithAMethodForContainer::class, 'existsIn'],
-        [\CartBuilderWithAnExistsMethodForContainer::class, 'existsIn'],
-        [\CartBuilderWithAnExistsMethodForContainerSetup::class, 'existsIn'],
+        [CartBuilderWithAMethodForContainer::class, 'existsIn'],
+        [CartBuilderWithAnExistsMethodForContainer::class, 'existsIn'],
     ];
 
     private SetUpClassMethodNodeManipulator $setUpClassMethodNodeManipulator;
@@ -78,7 +80,6 @@ final class UseContainerInsteadOfPassingRepositoriesToBuilderRector extends \Rec
             $type = $this->getType($call->var);
 
             if(! $type instanceof FullyQualifiedObjectType) {
-                var_dump($type);
                 continue;
             }
 

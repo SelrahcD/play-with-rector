@@ -1,16 +1,6 @@
 <?php
 
-final class CartBuilderWithAnExistsMethodForContainer
-{
-
-    public function existsIn(CartRepository $cartRepository): void
-    {
-    }
-
-    public function exists(\Psr\Container\ContainerInterface $container): void
-    {
-    }
-}
+use App\Tests\Rector\UseContainerInsteadOfPassingRepositoriesToBuilderRector\Source\CartBuilderWithAnExistsMethodForContainer;
 
 class SomeTest extends \PHPUnit\Framework\TestCase {
 
@@ -24,17 +14,7 @@ class SomeTest extends \PHPUnit\Framework\TestCase {
 -----
 <?php
 
-final class CartBuilderWithAnExistsMethodForContainer
-{
-
-    public function existsIn(CartRepository $cartRepository): void
-    {
-    }
-
-    public function exists(\Psr\Container\ContainerInterface $container): void
-    {
-    }
-}
+use App\Tests\Rector\UseContainerInsteadOfPassingRepositoriesToBuilderRector\Source\CartBuilderWithAnExistsMethodForContainer;
 
 class SomeTest extends \PHPUnit\Framework\TestCase {
 
